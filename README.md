@@ -2,11 +2,11 @@
 
 After Sales Service app built using Angular 4 and Bootstrap 4 && SB Admin project for dashboard
 
-This project is a port of the famous Free Admin Bootstrap Theme [SB Admin v4.0](http://startbootstrap.com/template-overviews/sb-admin-2/) to Angular4 Theme.
+This project uses in part the famous Free Admin Bootstrap Theme [SB Admin v4.0](http://startbootstrap.com/template-overviews/sb-admin-2/) to Angular4 Theme.
 
 Powered by [StartAngular](http://startangular.com/) & [StrapUI](http://strapui.com/)
 
-## [Demo](http://rawgit.com/start-angular/SB-Admin-BS4-Angular-4/master/dist/)
+## [Demo]()
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
