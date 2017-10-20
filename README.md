@@ -1,6 +1,6 @@
-# SB Admin rewritten in Angular4 and Bootstrap 4
+# SAV || ASS using Angular4 + Bootstrap4
 
-Simple Dashboard Admin App built using Angular 4 and Bootstrap 4
+After Sales Service app built using Angular 4 and Bootstrap 4 && SB Admin project for dashboard
 
 This project is a port of the famous Free Admin Bootstrap Theme [SB Admin v4.0](http://startbootstrap.com/template-overviews/sb-admin-2/) to Angular4 Theme.
 
@@ -28,8 +28,8 @@ Provides fast, reliable and extensible starter for the development of Angular pr
 
 In order to start the project use:
 ```bash
-$ git clone https://github.com/start-angular/SB-Admin-BS4-Angular-4
-$ cd SB-Admin-BS4-Angular-4
+$ git clone https://git@github.com:speroamey/sav-front.git
+$ cd sav-front
 # install the project's dependencies
 $ npm install
 # watches your files and uses livereload by default run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
