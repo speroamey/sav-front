@@ -4,3 +4,4 @@ export * from './modules';
 export * from './guard/auth.guard';
 export * from './services/AuthServices';
 export * from './model/cors-xhr'
+export * from './services/loggedIn.guard'

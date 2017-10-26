@@ -1,0 +1,84 @@
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Prestations</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>One fine body&hellip;</p>
+            <form role="form">
+
+              <div class="form-group">
+                  <label class="form-control-label" for="libellePrestation">Libellé prestation</label>
+                  <input type="text" class="form-control" [(ngModel)]="libellePrestation" name="libellePrestation"  id="libellePrestation">
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="dateLivraison">Date De Livraison</label>
+                  <input type="text" class="form-control " [(ngModel)]="dateLivraison" name="dateLivraison" id="dateLivraison">
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="delaisGarantie">Délais de garantie</label>
+                  <input type="text" class="form-control" [(ngModel)]="datedelaisGarantieLivraison" name="delaisGarantie"id="delaisGarantie">
+              </div>
+
+              <div class="form-group">
+                <label for="disabledSelect">Date fin de garantie</label>
+                <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" disabled="">
+              </div>
+          </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Valider</button>
+    </div>
+</ng-template>
+
+
+<div [@routerTransition]>
+    <!-- <app-page-header [heading]="'Projets'" [icon]="'fa-table'"></app-page-header> -->
+    <div class="row">
+        <div class="col col-xl-6 col-lg-12 col-md-12">
+
+        <button class="btn btn-primary" (click)="open(content)"> + Ajouter</button>
+
+            <div class="card mb-12 col-md-12">
+                <div class="card-header">Liste des projets</div>
+                <div class="card-block table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Libellé</th>
+                            <th>%  Date Livraison</th>
+                            <th>Délais Garantie</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let prestation of prestations">
+                            <td>{{prestation.id}}</td>
+                            <td>{{prestation.libelle_prestation}}</td>
+                            <td>{{prestation.date_livraison}}</td>
+                            <td>{{prestation.delais_garantie}}</td>
+                            <td>
+                                <span class="text" style="margin-right:15px; cursor:pointer; color:blue;" (click)="delete()">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </span>
+                                <span class="text" style="cursor:pointer; color:red;" (click)="edit()">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

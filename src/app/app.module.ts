@@ -7,8 +7,10 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import { AuthGuard, CustExtBrowserXhr } from './shared';
-import {AuthService} from './shared'
+import {AuthService,AUTH_PROVIDERS,LoggedInGuard} from './shared'
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
     // for development
@@ -35,8 +37,11 @@ export function HttpLoaderFactory(http: Http) {
         })
     ],
     providers: [
-      AuthGuard,
+    //   AuthGuard,
       AuthService,
+      AUTH_PROVIDERS,
+      LoggedInGuard,
+      { provide: LocationStrategy, useClass: HashLocationStrategy }
     //   { provide: BrowserXhr,useClass:CustExtBrowserXhr}
 ],
     bootstrap: [AppComponent]

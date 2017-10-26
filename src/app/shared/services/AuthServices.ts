@@ -3,57 +3,61 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { HOST } from '../model/request-util';
 import { ResponseWrapper } from '../model/response-wrapper.model';
 
-import { Jsonp, Http, Response, URLSearchParams,BaseRequestOptions } from '@angular/http';
+import { Http, Response, URLSearchParams,BaseRequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class AuthService {
+  public token: string;
+  private loginUrl = HOST + '/login';
 
-  private registerUrl = HOST + '/login';
-
-   constructor(private jsonp: Jsonp, private router: Router,private http: Http) { }
+   constructor( private router: Router,private http: Http) {
+    //  var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    //  this.token = currentUser && currentUser.token;
+   }
 
   register(data){
     const options: BaseRequestOptions = new BaseRequestOptions();
     options.headers.append('Content-Type','application/json')
 
     return this.http
-      .post(this.registerUrl, data, options)
-      .map((res: Response) => {
-        // let user = res.json();
-        console.log("là xa va", res)
-                // if (user && user.token) {
-                //     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                //     localStorage.setItem('currentUser', JSON.stringify(user));
-                // }
+      .post(this.loginUrl, data, options)
+        .map((res) => {
+          console.log('auth service',res)
+          let data=res.json();
+          if(data){
+            localStorage.setItem('currentUser', JSON.stringify({ username: data.username, token: data.password }));
+            return true;
+          }else{
+            return false;
+          }
 
-                // return user;
-      })
-  }
-
-  login(user: string, password: string): boolean {
-
-
-
-    if (user === 'user' && password === 'password') {
-      localStorage.setItem('username', user);
-      this.router.navigate(['/dashboard']);
-      return true;
+        })
     }
-    this.router.navigate(['/login']);
-    return false;
-  }
+
+  // login(user: string, password: string): boolean {
+  //
+  //
+  //
+  //   if (user === 'user' && password === 'password') {
+  //     localStorage.setItem('username', user);
+  //     this.router.navigate(['/dashboard']);
+  //     return true;
+  //   }
+  //   this.router.navigate(['/login']);
+  //   return false;
+  // }
 
   logout(): any {
-    localStorage.removeItem('username');
+    localStorage.removeItem('currentUser');
   }
 
-  getUser(): any {
-    return localStorage.getItem('username');
-  }
-  isLoggedIn(): boolean {
-    return this.getUser() !== null;
-  }
+  // getUser(): any {
+  //   return localStorage.getItem('currentUser');
+  // }
+  // isLoggedIn(): boolean {
+  //   return this.getUser() !== null;
+  // }
 
   private convertResponse(res: Response): ResponseWrapper {
     const jsonResponse = res.json();

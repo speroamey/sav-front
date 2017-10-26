@@ -15,44 +15,52 @@ export class LoginComponent implements OnInit {
     private credentials:any;
     message: string;
     private data:any;
+    private loading = false;
     constructor(public router: Router, private authService: AuthService) {
         this.credentials = {};
     }
 
     ngOnInit() {
+         this.authService.logout();
     }
 
-    onLoggedin() {
-      this.message = '';
-      console.log(this.password);
-      if (!this.authService.login(this.username, this.password)) {
-        this.message = 'Incorrect credentials.';
-        console.log(this.message);
-        setTimeout(function() {
-          this.message = '';
-        }.bind(this), 2500);
-      }
-      return false;
-        // localStorage.setItem('isLoggedin', 'true');
-    }
+    // onLoggedin() {
+    //   this.message = '';
+    //   console.log(this.password);
+    //   if (!this.authService.login(this.username, this.password)) {
+    //     this.message = 'Incorrect credentials.';
+    //     console.log(this.message);
+    //     setTimeout(function() {
+    //       this.message = '';
+    //     }.bind(this), 2500);
+    //   }
+    //   return false;
+    //     // localStorage.setItem('isLoggedin', 'true');
+    // }
 
     onSignUp() {
       this.message = '';
-      console.log(this.password);
       this.credentials.username=this.username;
       this.credentials.password=this.password;
-
       if (this.credentials) {
         this.authService.register(this.credentials)
-        .subscribe(
-            ((fiche: any) => {
-                this.data = fiche;
-                console.log(this.data);
-            })
-        );
+        .subscribe(result => {
+                console.log(result);
+                if (result === true) {
+                    this.data=result;
+                    console.log('jusque là ',this.data);
+                    this.router.navigate(['/']);
+                } else {
 
-        this.message = 'Incorrect credentials.';
-        console.log(this.message);
+                    this.loading = false;
+                }
+            // ((fiche: any) => {
+            //     this.data = fiche;
+            // })
+        });
+
+        // this.message = 'Incorrect credentials.';
+        // console.log(this.message);
         // setTimeout(function() {
         //   this.message = '';
         // }.bind(this), 2500);

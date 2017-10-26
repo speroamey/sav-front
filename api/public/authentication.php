@@ -2,120 +2,128 @@
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-// require '../vendor/autoload.php';
+use \RedBeanPHP\R as R;
+require_once 'passwordHash.php';
+$db_host = "localhost";
+$db_dbname = "sav_db";
+$db_username = "root";
+$db_password = "virus";
+R::setup ('mysql:host='.$db_host.';dbname='.$db_dbname.';chartset=utf8',''.$db_username.'',''.$db_password.'');
 
-// $app = new Slim\App([
-//     "settings"  => [
-//         "determineRouteBeforeAppMiddleware" => true,
-//     ]
-// ]);
+// for production mode value should be passed to true
+R::freeze(false);
 
-$app->get('/', function (Request $request, Response $response) {
-    $response->getBody()->write("Hello, This here is the API'S entry point");
-    return $response;
-});
-
-// $app->get('/', function () {
-//     echo ('<h1>Hello to redbean ($app)</h1>');
-// });
-$app->post('/login', function (Request $request, Response $response) {
-    echo ('<h1>Hello je suis le login</h1>');
-});
-$app->get('/session', function(Request $request, Response $response) {
-    $db = new DbHandler();
-    $session = $db->getSession();
-    $response["uid"] = $session['uid'];
-    $response["email"] = $session['email'];
-    $response["name"] = $session['name'];
-    echoResponse(200, $session);
-});
 
 $app->post('/register', function(Request $request, Response $response) {
 
-    // $response=array();
-    // $response["email"] = "cool email";
-    // $response["name"] = "cool name";
-    // $data = $request->getParsedBody();
-    // echo "$data";
-    // $ticket_data = [];
-    // $ticket_data['title'] = filter_var($data['title'], FILTER_SANITIZE_STRING);
-    // $ticket_data['description'] = filter_var($data['description'], FILTER_SANITIZE_STRING);
-    // echoResponse(200, $response);
+    $data= $request->getParsedBody();
+
+     $user = R::dispense('user');
+     $user->username = $data[username];
+     $user->password = $data[password];
+
+     $isUserExists = R::findOne('user', 'username = ? ', [$user->username] );
+      echo "$isUserExists";
+
+    if(empty($isUserExists)){
+        $user->password= passwordHash::hash($user->password);
+        $user->username= $user->username;
+        $id = R::store($user);
+
+        if ($id != NULL) {
+            $response->status = "success";
+            $response->message = "Félicitation, Votre compte est créé";
+            echo "Félicitation, Votre compte est créé";
+            // return $response->withJson($response,200);
+        } else {
+            $response->status  = "error";
+            $response->message  = "Désolé. veuillez réessayer";
+            echo "désolé. veuillez réessayer";
+            // return $response->withJson($response,201);
+        }
+    }else{
+        $response->status = "error";
+        $response->message = "un utilisateur ayant ces identifiant existe déja!";
+        echo "un utilisateur ayant ces identifiant existe déja ";
+        // return $response->withJson($responsstatus)
+    }
+
+
+
+
+
+
+
 });
 
-$app->post('/loginn', function() use ($app) {
-    require_once 'passwordHash.php';
-    $r = json_decode($app->request->getBody());
-    verifyRequiredParams(array('email', 'password'),$r->customer);
-    $response = array();
-    $db = new DbHandler();
-    $password = $r->customer->password;
-    $email = $r->customer->email;
-    $user = $db->getOneRecord("select uid,name,password,email,created from customers_auth where phone='$email' or email='$email'");
-    if ($user != NULL) {
-        if(passwordHash::check_password($user['password'],$password)){
-        $response['status'] = "success";
-        $response['message'] = 'Logged in successfully.';
-        $response['name'] = $user['name'];
-        $response['uid'] = $user['uid'];
-        $response['email'] = $user['email'];
-        $response['createdAt'] = $user['created'];
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-        $_SESSION['uid'] = $user['uid'];
-        $_SESSION['email'] = $email;
-        $_SESSION['name'] = $user['name'];
-        } else {
-            $response['status'] = "error";
-            $response['message'] = 'Login failed. Incorrect credentials';
-        }
-    }else {
-            $response['status'] = "error";
-            $response['message'] = 'No such user is registered';
-        }
-    echoResponse(200, $response);
-});
-$app->post('/signUp', function() use ($app) {
-    $response = array();
-    $r = json_decode($app->request->getBody());
-    verifyRequiredParams(array('email', 'name', 'password'),$r->customer);
-    require_once 'passwordHash.php';
-    $db = new DbHandler();
-    $phone = $r->customer->phone;
-    $name = $r->customer->name;
-    $email = $r->customer->email;
-    $address = $r->customer->address;
-    $password = $r->customer->password;
-    $isUserExists = $db->getOneRecord("select 1 from customers_auth where  email='$email' or name='$name'");
-    if(!$isUserExists){
-        $r->customer->password = passwordHash::hash($password);
-        $tabble_name = "customers_auth";
-        $column_names = array('phone', 'name', 'email', 'password', 'city', 'address');
-        $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
-        if ($result != NULL) {
-            $response["status"] = "success";
-            $response["message"] = "Félicitation, Votre compte est créé";
-            $response["uid"] = $result;
+$app->post('/login', function(Request $request, Response $response)  {
+     $data= $request->getParsedBody();
+     $password = $data[password];
+     $user->username = $data[username];
+     $user = R::findOne('user', 'username = ? ', [$user->username] );
+    // $user = $db->getOneRecord("select uid,name,password,email,created from customers_auth where phone='$email' or email='$email'");
+    if (!empty($user)) {
+        // echo "$user";
+        if(passwordHash::check_password($user->password,$password)){
+            return $response->withJson($user,200);
             if (!isset($_SESSION)) {
                 session_start();
             }
-            $_SESSION['uid'] = $response["uid"];
-            $_SESSION['phone'] = $phone;
-            $_SESSION['name'] = $name;
-            $_SESSION['email'] = $email;
-            echoResponse(200, $response);
-        } else {
-            $response["status"] = "error";
-            $response["message"] = "Désolé. veuillez réessayer";
-            echoResponse(201, $response);
+        // $_SESSION['uid'] = $user['uid'];
+        // $_SESSION['email'] = $email;
+        // $_SESSION['name'] = $user['name'];
+            } else {
+              echo "ERROR";
+                $message='Login failed. Incorrect credentials';
+                return $response->withJson($message,401);
+            }
+        }else {
+            $message='Utilisateur non identifié';
+            return $response->withJson($message,401);
         }
-    }else{
-        $response["status"] = "error";
-        $response["message"] = "Cet utilisateur ayant ces identifiant existe déja!";
-        echoResponse(201, $response);
-    }
+    // echoResponse(200, $response);
 });
+
+// $app->post('/signUp', function() use ($app) {
+//     $response = array();
+//     $r = json_decode($app->request->getBody());
+//     verifyRequiredParams(array('email', 'name', 'password'),$r->customer);
+//     require_once 'passwordHash.php';
+//     $db = new DbHandler();
+//     $phone = $r->customer->phone;
+//     $name = $r->customer->name;
+//     $email = $r->customer->email;
+//     $address = $r->customer->address;
+//     $password = $r->customer->password;
+//     $isUserExists = $db->getOneRecord("select 1 from customers_auth where  email='$email' or name='$name'");
+//     if(!$isUserExists){
+//         $r->customer->password = passwordHash::hash($password);
+//         $tabble_name = "customers_auth";
+//         $column_names = array('phone', 'name', 'email', 'password', 'city', 'address');
+//         $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
+//         if ($result != NULL) {
+//             $response["status"] = "success";
+//             $response["message"] = "Félicitation, Votre compte est créé";
+//             $response["uid"] = $result;
+//             if (!isset($_SESSION)) {
+//                 session_start();
+//             }
+//             $_SESSION['uid'] = $response["uid"];
+//             $_SESSION['phone'] = $phone;
+//             $_SESSION['name'] = $name;
+//             $_SESSION['email'] = $email;
+//             echoResponse(200, $response);
+//         } else {
+//             $response["status"] = "error";
+//             $response["message"] = "Désolé. veuillez réessayer";
+//             echoResponse(201, $response);
+//         }
+//     }else{
+//         $response["status"] = "error";
+//         $response["message"] = "Cet utilisateur ayant ces identifiant existe déja!";
+//         echoResponse(201, $response);
+//     }
+// });
 $app->get('/logout', function() {
     $db = new DbHandler();
     $session = $db->destroySession();

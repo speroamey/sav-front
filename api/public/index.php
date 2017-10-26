@@ -50,7 +50,9 @@ $app->add(function($request, $response, $next) {
     return $response->withHeader("Access-Control-Allow-Methods", implode(",", $methods));
 });
 
+// require 'utils.php';
 require 'authentication.php';
+require 'prestation.php';
 
 // // $app = new \Slim\App;
 // // This Slim setting is required for the middleware to work
