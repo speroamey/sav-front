@@ -8,28 +8,45 @@
         </button>
     </div>
     <div class="modal-body">
-        <p>One fine body&hellip;</p>
             <form role="form">
 
               <div class="form-group">
                   <label class="form-control-label" for="libellePrestation">Libellé prestation</label>
-                  <input type="text" class="form-control" [(ngModel)]="libellePrestation" name="libellePrestation"  id="libellePrestation">
+                  <input type="text" class="form-control" [(ngModel)]="prestation.libelle_prestation" name="libellePrestation"  id="libellePrestation">
+              </div>
+              <div class="form-group">
+                <label class="form-control-label" for="IdClient">Id du client</label>
+                  <select class="form-control" [(ngModel)]="prestation.client" name="IdPrestation"id="IdPrestation">
+                    <option [ngValue]="client.id" *ngFor="let client of clients">ID:{{client.id}} {{client.nom_client}}</option>
+                  </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-control-label" for="equipement">Réference de l'équipement</label>
+                  <select multiple class="form-control" [(ngModel)]="prestation.equipement" name="IdPrestation"id="IdPrestation">
+                    <option [ngValue]="equipement.id" *ngFor="let equipement of equipements | equipementuse:0">{{equipement.reference_equipement}}</option>
+                  </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-control-label" for="IdTechnicien">Les techniciens</label>
+                  <select multiple class="form-control" [(ngModel)]="prestation.technicien" name="IdTechnicien"id="IdTechnicien">
+                    <option [ngValue]="technicien.id" *ngFor="let technicien of techniciens">{{technicien.id}}: {{technicien.nom_technicien}}</option>
+                  </select>
               </div>
 
               <div class="form-group">
                   <label class="form-control-label" for="dateLivraison">Date De Livraison</label>
-                  <input type="text" class="form-control " [(ngModel)]="dateLivraison" name="dateLivraison" id="dateLivraison">
+                  <div class="input-group">
+                      <input type="text" class="form-control " [(ngModel)]="prestation.date_livraison"
+                       name="dateLivraison" ngbDatepicker #d="ngbDatepicker" id="dateLivraison">
+                      <button class="input-group-addon" (click)="d.toggle()" type="button">
+                          <i class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;" aria-hidden="true"></i>
+                      </button>
+                  </div>
               </div>
 
-              <div class="form-group">
-                  <label class="form-control-label" for="delaisGarantie">Délais de garantie</label>
-                  <input type="text" class="form-control" [(ngModel)]="datedelaisGarantieLivraison" name="delaisGarantie"id="delaisGarantie">
-              </div>
 
-              <div class="form-group">
-                <label for="disabledSelect">Date fin de garantie</label>
-                <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" disabled="">
-              </div>
           </form>
     </div>
     <div class="modal-footer">
@@ -39,37 +56,61 @@
 </ng-template>
 
 
+<!-- Template de suppression -->
+<ng-template #delete let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Suppression</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="ustify-content-center">Voulez vous vraimen supprimer cette prestation ?</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Non</button>
+        <button type="button" class="btn btn-danger" (click)="remove()">Oui</button>
+    </div>
+</ng-template>
+
+
 <div [@routerTransition]>
     <!-- <app-page-header [heading]="'Projets'" [icon]="'fa-table'"></app-page-header> -->
     <div class="row">
-        <div class="col col-xl-6 col-lg-12 col-md-12">
-
+        <div class="col-lg-12 col-md-12">
         <button class="btn btn-primary" (click)="open(content)"> + Ajouter</button>
-
-            <div class="card mb-12 col-md-12">
-                <div class="card-header">Liste des projets</div>
-                <div class="card-block table-responsive">
+            <div class="">
+                <div class="card-header">Liste des Prestations</div>
+                <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
                             <th>ID</th>
                             <th>Libellé</th>
-                            <th>%  Date Livraison</th>
-                            <th>Délais Garantie</th>
+                            <th>Date Livraison</th>
+                            <!-- <th>Durée de Garantie</th>
+                            <th>Date de fin de garantie</th> -->
+
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr *ngFor="let prestation of prestations">
-                            <td>{{prestation.id}}</td>
-                            <td>{{prestation.libelle_prestation}}</td>
-                            <td>{{prestation.date_livraison}}</td>
-                            <td>{{prestation.delais_garantie}}</td>
+                            <!-- {{prestations | json}} -->
+                            <td  [routerLink]="['/projets', prestation.id]" style="cursor:pointer;">{{prestation.id}}</td>
+                            <td  [routerLink]="['/projets', prestation.id]" style="cursor:pointer;">{{prestation.libelle_prestation}}</td>
+                            <td  [routerLink]="['/projets', prestation.id]" style="cursor:pointer;">{{prestation.date_livraison | date:yMdjm}}</td>
+                            <!-- <td  [routerLink]="['/projets', prestation.id]" style="cursor:pointer;">{{prestation.delais_garantie}} mois</td>
+                            <td  [routerLink]="['/projets', prestation.id]" style="cursor:pointer;">{{prestation.date_fin_garantie | date:yMdjm}}</td> -->
+
                             <td>
-                                <span class="text" style="margin-right:15px; cursor:pointer; color:blue;" (click)="delete()">
+                                <span class="text" style="margin-right:15px; cursor:pointer; color:blue;" [routerLink]="['/projets', prestation.id]">
+                                  <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
+                                <span class="text" style="margin-right:15px; cursor:pointer; color:blue;" (click)="open(content,prestation)">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </span>
-                                <span class="text" style="cursor:pointer; color:red;" (click)="edit()">
+                                <span class="text" style="cursor:pointer; color:red;" (click)="open(delete,prestation)">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                 </span>
                             </td>

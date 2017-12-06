@@ -3,12 +3,18 @@ import { CommonModule } from '@angular/common';
 import { ChartsModule as Ng2Charts } from 'ng2-charts';
 import { NgbModule, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import {prestationModalService} from './modal-service'
+import { DatePipe } from '@angular/common';
+import {clientModalService} from  '../clients/modal-service'
+import {EquipementPipe} from './pipe'
 // import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProjetsRoutingModule } from './projets-routing.module';
 import { ProjetsComponent } from './projets.component';
 import { PageHeaderModule } from '../../shared';
+import {prestationModalService} from './modal-service';
+import { ProjetsDetailsComponent } from './projets-details.component';
+import {equipementModalService} from '../equipements/modal-service'
+import{technicienModalService} from '../techniciens/modal-service'
 
 @NgModule({
     imports: [
@@ -17,10 +23,11 @@ import { PageHeaderModule } from '../../shared';
         ProjetsRoutingModule,
         PageHeaderModule,
         FormsModule,
+
         NgbModule.forRoot()
     ],
-    declarations: [ProjetsComponent,],
-    providers: [prestationModalService,NgbActiveModal],
+    declarations: [ProjetsComponent,ProjetsDetailsComponent,EquipementPipe],
+    providers: [prestationModalService,NgbActiveModal,DatePipe,clientModalService,equipementModalService,technicienModalService],
 
 })
 export class ProjetsModule { }

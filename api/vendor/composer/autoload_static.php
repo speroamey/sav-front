@@ -11,6 +11,10 @@ class ComposerStaticInitf2926f787336a610575ec8e1b90ea86b
     );
 
     public static $prefixLengthsPsr4 = array (
+        'T' => 
+        array (
+            'Twilio\\' => 7,
+        ),
         'S' => 
         array (
             'Slim\\Middleware\\' => 16,
@@ -38,6 +42,10 @@ class ComposerStaticInitf2926f787336a610575ec8e1b90ea86b
     );
 
     public static $prefixDirsPsr4 = array (
+        'Twilio\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twilio/sdk/Twilio',
+        ),
         'Slim\\Middleware\\' => 
         array (
             0 => __DIR__ . '/..' . '/tuupola/slim-jwt-auth/src',

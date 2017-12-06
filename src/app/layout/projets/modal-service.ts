@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Rx';
 export class prestationModalService {
   public token: string;
   private prestationUrl = HOST + '/prestation';
-
+  private detailsUrl = HOST + '/prestationdetail'
    constructor( private router: Router,private http: Http) {
     //  var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     //  this.token = currentUser && currentUser.token;
@@ -37,4 +37,35 @@ export class prestationModalService {
           return res.json();
         })
     }
+
+    findDetails(id){
+      const options: BaseRequestOptions = new BaseRequestOptions();
+      options.headers.append('Content-Type','application/json')
+
+      return this.http
+        .get(`${this.detailsUrl}/${id}`, options)
+          .map((res) => {
+            return res;
+          })
+      }
+
+
+    update(id,data){
+      const options: BaseRequestOptions = new BaseRequestOptions();
+      options.headers.append('Content-Type','application/json')
+        // return this.http.put(`${this.prestationUrl}/${id}`, options);
+      return this.http
+        .put(`${this.prestationUrl}/${id}`, data, options)
+          .map((res) => {
+            return res;
+          })
+      }
+
+    remove(id){
+      console.log(id);
+      const options: BaseRequestOptions = new BaseRequestOptions();
+      options.headers.append('Content-Type','application/json')
+
+      return this.http.delete(`${this.prestationUrl}/${id}`, options);
+      }
 }

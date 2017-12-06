@@ -1,0 +1,104 @@
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Equipement</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- <p>One fine body&hellip;</p> -->
+            <form role="form">
+              <div class="form-group">
+                  <label class="form-control-label" for="ReferenceEquipement">Référence de l'équipement</label>
+                  <input type="text" class="form-control" [(ngModel)]="equipement.reference_equipement" name="ReferenceEquipement"  id="ReferenceEquipement">
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="nomEquipement">nom de l'équipement</label>
+                  <input type="text" class="form-control" [(ngModel)]="equipement.nom_equipement" name="nomEquipement"  id="nomEquipement">
+              </div>
+              <div class="form-group">
+                  <label class="form-control-label" for="MarqueEquipement">Marque de l'equipement</label>
+                  <input type="text" class="form-control" [(ngModel)]="equipement.marque_equipement" name="MarqueEquipement"  id="MarqueEquipement">
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="DelaisGarantieEquipement">delais de garantie de equipement</label>
+                  <input type="number" class="form-control" [(ngModel)]="equipement.delais_garantie" name="DelaisGarantieEquipement"id="DelaisGarantieEquipement">
+              </div>
+
+
+          </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Valider</button>
+    </div>
+</ng-template>
+
+<!-- Template de suppression -->
+<ng-template #delete let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Suppression</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="ustify-content-center">Voulez vous vraimen supprimer cette equipement ?</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Non</button>
+
+        <button type="button" class="btn btn-danger" (click)="remove()">Oui</button>
+    </div>
+</ng-template>
+
+
+<div [@routerTransition]>
+    <!-- <app-page-header [heading]="'Projets'" [icon]="'fa-table'"></app-page-header> -->
+    <div class="row">
+        <div class="col col-xl-6 col-lg-12 col-md-12">
+        <button class="btn btn-primary" (click)="open(content)"> + Ajouter</button>
+            <div class="card mb-12 col-md-12">
+                <div class="card-header">Liste des equipements</div>
+                <div class="card-block table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Référence</th>
+                            <th>Marque</th>
+                            <th>Nom</th>
+                            <th>Délais degarantie</th>
+                            <!-- <th>Adresse</th> -->
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let equipement of equipements">
+                            <td>{{equipement.id}}</td>
+                            <td>{{equipement.reference_equipement}}</td>
+                            <td>{{equipement.marque_equipement}} mois</td>
+                            <td>{{equipement.nom_equipement}}</td>
+                            <td>{{equipement.delais_garantie}}</td>
+
+                            <td>
+                                <span class="text" style="margin-right:15px; cursor:pointer; color:blue;" (click)="open(content,equipement)">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </span>
+                                <span class="text" style="cursor:pointer; color:red;" (click)="open(delete,equipement)">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

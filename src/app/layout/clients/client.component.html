@@ -1,0 +1,126 @@
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Client</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- <p>One fine body&hellip;</p> -->
+            <form role="form">
+
+                <div class="form-group">
+                    <label class="form-control-label" for="TypeClient">Type de client</label>
+                    <!-- <input type="number" class="form-control" > -->
+                    <select class="form-control" [(ngModel)]="client.type_client" name="TypeClient"id="TypeClient">
+                      <option [ngValue]="tc.libelle" *ngFor="let tc of typeClient">{{tc.libelle}}</option>
+                    </select>
+                </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="NomClient">Nom du client</label>
+                  <input type="text" class="form-control" [(ngModel)]="client.nom_client" name="NomClient"  id="NomClient">
+              </div>
+
+              <!-- Use onChange to show or hide -->
+              <!-- <div class="form-group" *ngIf="!typeClient.libelle">
+                  <label class="form-control-label" for="SexeClient">Sexe du client</label>
+                  <input type="text" class="form-control" [(ngModel)]="client.sexe_client" name="SexeClient"  id="SexeClient">
+              </div> -->
+
+
+
+
+              <div class="form-group">
+                  <label class="form-control-label" for="EmailClient">Email du client</label>
+                  <input type="email" class="form-control" [(ngModel)]="client.email_client" name="EmailClient"id="EmailClient">
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="TelephoneClient">Téléphone du client</label>
+                  <input type="number" class="form-control" [(ngModel)]="client.telephone_client" name="TelephoneClient"  id="TelephoneClient">
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="AdresseClient">Adresse du client</label>
+                  <input type="text" class="form-control" [(ngModel)]="client.adresse_client" name="AdresseClient"id="AdresseClient">
+              </div>
+
+
+          </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Valider</button>
+    </div>
+</ng-template>
+
+
+<!-- Template de suppression -->
+<ng-template #delete let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Suppression</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="ustify-content-center">Voulez vous vraimen supprimer cette client ?</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Non</button>
+
+        <button type="button" class="btn btn-danger" (click)="remove()">Oui</button>
+    </div>
+</ng-template>
+
+
+<div [@routerTransition]>
+    <!-- <app-page-header [heading]="'Projets'" [icon]="'fa-table'"></app-page-header> -->
+    <div class="row">
+        <div class="col col-xl-6 col-lg-12 col-md-12">
+        <button class="btn btn-primary" (click)="open(content)"> + Ajouter</button>
+            <div class="card mb-12 col-md-12">
+                <div class="card-header">Liste des clients</div>
+                <div class="card-block table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Type</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Adresse</th>
+
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let client of clients">
+                            <td>{{client.id}}</td>
+                            <td>{{client.nom_client}}</td>
+                            <td>{{client.type_client }}</td>
+                            <td>{{client.email_client}}</td>
+                            <td>{{client.telephone_client}}</td>
+                            <td>{{client.adresse_client}} </td>
+
+                            <td>
+                                <span class="text" style="margin-right:15px; cursor:pointer; color:blue;" (click)="open(content,client)">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </span>
+                                <span class="text" style="cursor:pointer; color:red;" (click)="open(delete,client)">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

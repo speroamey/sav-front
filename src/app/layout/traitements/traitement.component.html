@@ -1,0 +1,118 @@
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Traitements</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+            <form role="form">
+                <div class="form-group">
+                  <label class="form-control-label" for="equipement"> ID de la plainte</label>
+                    <select class="form-control" [(ngModel)]="traitement.plainte" name="IdPlainte"id="IdPlainte">
+                      <option [ngValue]="plainte.id" *ngFor="let plainte of plaintes">{{plainte.id}}</option>
+                    </select>
+                </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="libelleTraitement">Libellé traitement</label>
+                  <input type="text" class="form-control" [(ngModel)]="traitement.libelle_traitement" name="libelleTraitement"  id="libelleTraitement">
+              </div>
+
+              <div class="form-group">
+                <label class="form-control-label" for="technicien"> Nom Technicien</label>
+                  <select class="form-control" [(ngModel)]="traitement.technicien" name="IdTechnicien"id="IdTechnicien">
+                    <option [ngValue]="technicien.id" *ngFor="let technicien of techniciens">{{technicien.id}} : {{technicien.nom_technicien}}</option>
+                  </select>
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="dateTraitement">Date du traitement</label>
+                  <div class="input-group">
+                      <input type="text" class="form-control " [(ngModel)]="traitement.date_traitement"
+                       name="dateLivraison" ngbDatepicker #d="ngbDatepicker" id="dateTraitement">
+                      <button class="input-group-addon" (click)="d.toggle()" type="button">
+                          <i class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;" aria-hidden="true"></i>
+                      </button>
+                  </div>
+              </div>
+              <!--
+              <div class="form-group">
+                  <label class="form-control-label" for="Etat">Durée de garantie (en mois)</label>
+                  <input type="number" class="form-control" [(ngModel)]="traitement.delais_garantie" name="delaisGarantie"id="delaisGarantie">
+              </div> -->
+
+          </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Valider</button>
+    </div>
+</ng-template>
+
+
+<!-- Template de suppression -->
+<ng-template #delete let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Suppression</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="ustify-content-center">Voulez vous vraimen supprimer cette traitement ?</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Non</button>
+
+        <button type="button" class="btn btn-danger" (click)="remove()">Oui</button>
+    </div>
+</ng-template>
+
+
+<div [@routerTransition]>
+    <!-- <app-page-header [heading]="'Projets'" [icon]="'fa-table'"></app-page-header> -->
+    <div class="row">
+        <div class="col col-xl-6 col-lg-12 col-md-12">
+        <button class="btn btn-primary" (click)="open(content)"> + Ajouter</button>
+            <div class="card mb-12 col-md-12">
+                <div class="card-header">Liste des Traitements</div>
+                <div class="card-block table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID traitement</th>
+                            <th>Id de la plainte</th>
+                            <th>Id du technicien</th>
+                            <th>Date traitement</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let traitement of traitements" style="cursor:pointer;">
+                            <td>{{traitement.id}}</td>
+                            <td>{{traitement.plainte}}</td>
+                            <td>{{traitement.technicien}}</td>
+                            <td>{{traitement.date_traitement | date:yMdjm}}</td>
+                            <td>
+                                <span class="text" style="margin-right:15px; cursor:pointer; color:blue;" [routerLink]="['/traitements', traitement.id]">
+                                  <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
+                                <span class="text" style="margin-right:15px; cursor:pointer; color:blue;" (click)="open(content,traitement)">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </span>
+                                <span class="text" style="cursor:pointer; color:red;" (click)="open(delete,traitement)">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

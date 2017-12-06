@@ -1,0 +1,40 @@
+
+
+<div [@routerTransition]>
+    <!-- <app-page-header [heading]="'Projets'" [icon]="'fa-table'"></app-page-header> -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+        <button class="btn btn-danger">Détails de la Prestations Numero: {{prestationId}}</button>
+            <div class="">
+                <div class="card-header">Liste Détails </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Référence de l'équipement</th>
+                            <th>Date de fin de garantie</th>
+
+                            <!-- <th>Actions</th> -->
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <!-- {{prestationsDetail | json}} -->
+                        <tr *ngFor="let prestationDetail of prestationsDetail">
+                            <!-- {{prestations | json}} -->
+
+                            <td>{{prestationDetail.id}}</td>
+                            <td>{{prestationDetail.ref_equipement}}</td>
+
+                            <td>{{prestationDetail.date | date:yMdjm}}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

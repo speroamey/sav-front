@@ -26,7 +26,7 @@ export function HttpLoaderFactory(http: Http) {
         BrowserAnimationsModule,
         FormsModule,
         HttpModule,
-         JsonpModule,
+        JsonpModule,
         AppRoutingModule,
         TranslateModule.forRoot({
             loader: {

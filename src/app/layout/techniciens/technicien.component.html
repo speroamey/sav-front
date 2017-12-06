@@ -1,0 +1,114 @@
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Technicien</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- <p>One fine body&hellip;</p> -->
+            <form role="form">
+
+              <div class="form-group">
+                  <label class="form-control-label" for="NomTechnicien">Nom du technicien</label>
+                  <input type="text" class="form-control" [(ngModel)]="technicien.nom_technicien" name="NomTechnicien"  id="NomTechnicien">
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="PrenomTechnicien">Prénom du technicien</label>
+                  <input type="text" class="form-control" [(ngModel)]="technicien.prenom_technicien" name="PrenomTechnicien"  id="PrenomTechnicien">
+              </div>
+
+
+              <div class="form-group">
+                  <label class="form-control-label" for="EmailTechnicien">Email du technicien</label>
+                  <input type="email" class="form-control" [(ngModel)]="technicien.email_technicien" name="EmailTechnicien"id="EmailTechnicien">
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="TelephoneTechnicien">Téléphone du technicien</label>
+                  <input type="text" class="form-control" [(ngModel)]="technicien.telephone_technicien" name="TelephoneTechnicien"  id="TelephoneTechnicien">
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="AdresseTechnicien">Adresse du technicien</label>
+                  <input type="text" class="form-control" [(ngModel)]="technicien.adresse_technicien" name="AdresseTechnicien"id="AdresseTechnicien">
+              </div>
+
+          </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Valider</button>
+    </div>
+</ng-template>
+
+
+<!-- Template de suppression -->
+<ng-template #delete let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Suppression</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="ustify-content-center">Voulez vous vraimen supprimer cette technicien ?</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Non</button>
+
+        <button type="button" class="btn btn-danger" (click)="remove()">Oui</button>
+    </div>
+</ng-template>
+
+
+<div [@routerTransition]>
+    <!-- <app-page-header [heading]="'Projets'" [icon]="'fa-table'"></app-page-header> -->
+    <div class="row">
+        <div class="col col-xl-6 col-lg-12 col-md-12">
+        <button class="btn btn-primary" (click)="open(content)"> + Ajouter</button>
+            <div class="card mb-12 col-md-12">
+                <div class="card-header">Liste des techniciens</div>
+                <div class="card-block table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Type</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Adresse</th>
+
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let technicien of techniciens;let i=indes">
+                            <td>{{technicien.id}}</td>
+                            <td>{{technicien.nom_technicien}}</td>
+                            <td>{{technicien.prenom_technicien}}</td>
+                            <td>{{technicien.email_technicien}}</td>
+                            <td>{{technicien.telephone_technicien}}</td>
+                            <td>{{technicien.adresse_technicien}} </td>
+
+                            <td>
+                                <span class="text" style="margin-right:15px; cursor:pointer; color:blue;" (click)="open(content,technicien,i)">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </span>
+                                <span class="text" style="cursor:pointer; color:red;" (click)="open(delete,technicien)">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

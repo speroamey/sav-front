@@ -1,0 +1,114 @@
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Plaintes</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+            <form role="form">
+                <div class="form-group">
+                    <label class="form-control-label" for="IdPrestation">Id de la Prestation</label>
+                    <select class="form-control" [(ngModel)]="plainte.prestation" name="IdPrestation"id="IdPrestation">
+                        <option [ngValue]="prestation.id" *ngFor="let prestation of prestations">{{prestation.id}} {{prestation.libelle_prestation}}</option>
+                    </select>
+                </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="DescriptionPlainte">Description de plainte</label>
+                  <input type="text" class="form-control" [(ngModel)]="plainte.description_plainte" name="description_plainte"  id="description_plainte">
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label" for="datePlainte">Date de la plainte</label>
+                  <div class="input-group">
+                      <input type="text" class="form-control " [(ngModel)]="plainte.date_plainte"
+                       name="dateLivraison" ngbDatepicker #d="ngbDatepicker" id="datePlainte">
+                      <button class="input-group-addon" (click)="d.toggle()" type="button">
+                          <i class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;" aria-hidden="true"></i>
+                      </button>
+                  </div>
+              </div>
+              <!--
+              <div class="form-group">
+                  <label class="form-control-label" for="Etat">Durée de garantie (en mois)</label>
+                  <input type="number" class="form-control" [(ngModel)]="plainte.delais_garantie" name="delaisGarantie"id="delaisGarantie">
+              </div> -->
+
+          </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Valider</button>
+    </div>
+</ng-template>
+
+
+<!-- Template de suppression -->
+<ng-template #delete let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Suppression</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="ustify-content-center">Voulez vous vraimen supprimer cette plainte ?</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Non</button>
+
+        <button type="button" class="btn btn-danger" (click)="remove()">Oui</button>
+    </div>
+</ng-template>
+
+
+<div [@routerTransition]>
+    <!-- <app-page-header [heading]="'Projets'" [icon]="'fa-table'"></app-page-header> -->
+    <div class="row">
+        <div class="col col-xl-6 col-lg-12 col-md-12">
+        <button class="btn btn-primary" (click)="open(content)"> + Ajouter</button>
+            <div class="card mb-12 col-md-12">
+                <div class="card-header">Liste des Plaintes</div>
+                <div class="card-block table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Prestation</th>
+                            <th>Description de la plainte</th>
+                            <th>Date de la plainte</th>
+
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let plainte of plaintes" style="cursor:pointer;">
+                            <!-- {{plaintes | json}} -->
+                            <td >{{plainte.id}}</td>
+                            <td>{{plainte.prestation}}</td>
+                            <td>{{plainte.description_plainte}}</td>
+                            <td>{{plainte.date_plainte | date:yMdjm}}</td>
+
+                            <td>
+                                <span class="text" style="margin-right:15px; cursor:pointer; color:blue;" [routerLink]="['/plaintes', plainte.id]">
+                                  <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
+                                <span class="text" style="margin-right:15px; cursor:pointer; color:blue;" (click)="open(content,plainte)">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </span>
+                                <span class="text" style="cursor:pointer; color:red;" (click)="open(delete,plainte)">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
