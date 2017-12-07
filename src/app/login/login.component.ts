@@ -38,17 +38,15 @@ export class LoginComponent implements OnInit {
     //     // localStorage.setItem('isLoggedin', 'true');
     // }
 
-    onSignUp() {
+    onSignIn() {
       this.message = '';
       this.credentials.username=this.username;
       this.credentials.password=this.password;
       if (this.credentials) {
-        this.authService.register(this.credentials)
+        this.authService.login(this.credentials)
         .subscribe(result => {
-                console.log(result);
                 if (result === true) {
                     this.data=result;
-                    console.log('jusque là ',this.data);
                     this.router.navigate(['/']);
                 } else {
 

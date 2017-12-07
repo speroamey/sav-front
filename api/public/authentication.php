@@ -9,7 +9,8 @@ $db_dbname = "sav_db";
 $db_username = "root";
 $db_password = "virus";
 R::setup ('mysql:host='.$db_host.';dbname='.$db_dbname.';chartset=utf8',''.$db_username.'',''.$db_password.'');
-
+// $isConnected = R::testConnection();
+// var_dump($isConnected);
 // for production mode value should be passed to true
 R::freeze(false);
 
@@ -19,11 +20,10 @@ $app->post('/register', function(Request $request, Response $response) {
     $data= $request->getParsedBody();
 
      $user = R::dispense('user');
-     $user->username = $data[username];
-     $user->password = $data[password];
+     $user->username = $data['username'];
+     $user->password = $data['password'];
 
      $isUserExists = R::findOne('user', 'username = ? ', [$user->username] );
-      echo "$isUserExists";
 
     if(empty($isUserExists)){
         $user->password= passwordHash::hash($user->password);
@@ -31,21 +31,19 @@ $app->post('/register', function(Request $request, Response $response) {
         $id = R::store($user);
 
         if ($id != NULL) {
-            $response->status = "success";
-            $response->message = "Félicitation, Votre compte est créé";
-            echo "Félicitation, Votre compte est créé";
-            // return $response->withJson($response,200);
+            $res->status = "success";
+            $res->message = "Félicitation, Votre compte est créé";
+            return $response->withJson($res);
         } else {
-            $response->status  = "error";
-            $response->message  = "Désolé. veuillez réessayer";
-            echo "désolé. veuillez réessayer";
-            // return $response->withJson($response,201);
+            $res->status  = "error";
+            $res->message  = "Désolé. veuillez réessayer";
+            // echo "désolé. veuillez réessayer";
+            return $response->withJson($res,201);
         }
     }else{
-        $response->status = "error";
-        $response->message = "un utilisateur ayant ces identifiant existe déja!";
-        echo "un utilisateur ayant ces identifiant existe déja ";
-        // return $response->withJson($responsstatus)
+        $res->status = "error";
+        $res->message = "désolé cet utilisateur existe déja";
+        return $response->withJson($res);
     }
 
 
@@ -58,20 +56,15 @@ $app->post('/register', function(Request $request, Response $response) {
 
 $app->post('/login', function(Request $request, Response $response)  {
      $data= $request->getParsedBody();
-     $password = $data[password];
-     $user->username = $data[username];
-     $user = R::findOne('user', 'username = ? ', [$user->username] );
-    // $user = $db->getOneRecord("select uid,name,password,email,created from customers_auth where phone='$email' or email='$email'");
+     $username = $data['username'];
+     $password = $data['password'];
+
+     $user = R::findOne('user', 'username = ? ', [$username] );
     if (!empty($user)) {
         // echo "$user";
         if(passwordHash::check_password($user->password,$password)){
             return $response->withJson($user,200);
-            if (!isset($_SESSION)) {
-                session_start();
-            }
-        // $_SESSION['uid'] = $user['uid'];
-        // $_SESSION['email'] = $email;
-        // $_SESSION['name'] = $user['name'];
+
             } else {
               echo "ERROR";
                 $message='Login failed. Incorrect credentials';

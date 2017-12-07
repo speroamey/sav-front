@@ -10,30 +10,48 @@ import { Observable } from 'rxjs/Rx';
 export class AuthService {
   public token: string;
   private loginUrl = HOST + '/login';
+  private registerUrl = HOST +'/register'
 
-   constructor( private router: Router,private http: Http) {
-    //  var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    //  this.token = currentUser && currentUser.token;
-   }
+   constructor( private router: Router,private http: Http) {}
 
   register(data){
     const options: BaseRequestOptions = new BaseRequestOptions();
     options.headers.append('Content-Type','application/json')
 
     return this.http
-      .post(this.loginUrl, data, options)
+      .post(this.registerUrl, data, options)
         .map((res) => {
-          console.log('auth service',res)
-          let data=res.json();
-          if(data){
-            localStorage.setItem('currentUser', JSON.stringify({ username: data.username, token: data.password }));
-            return true;
-          }else{
-            return false;
-          }
+          console.log(res.json());
+          return res.json();
+
+          // if(data){
+          //   localStorage.setItem('currentUser', JSON.stringify({ username: data.username, token: data.password }));
+          //   return true;
+          // }else{
+          //   return false;
+          // }
 
         })
     }
+
+    login(data){
+      const options: BaseRequestOptions = new BaseRequestOptions();
+      options.headers.append('Content-Type','application/json')
+
+      return this.http
+        .post(this.loginUrl, data, options)
+          .map((res) => {
+            console.log('auth service',res)
+            let data=res.json();
+            if(data){
+              localStorage.setItem('currentUser', JSON.stringify({ username: data.username, token: data.password }));
+              return true;
+            }else{
+              return false;
+            }
+
+          })
+      }
 
   // login(user: string, password: string): boolean {
   //
@@ -52,17 +70,7 @@ export class AuthService {
     localStorage.removeItem('currentUser');
   }
 
-  // getUser(): any {
-  //   return localStorage.getItem('currentUser');
-  // }
-  // isLoggedIn(): boolean {
-  //   return this.getUser() !== null;
-  // }
 
-  private convertResponse(res: Response): ResponseWrapper {
-    const jsonResponse = res.json();
-    return new ResponseWrapper(res.headers, jsonResponse, res.status);
-  }
 }
 
 export const AUTH_PROVIDERS: Array<any> = [
