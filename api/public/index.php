@@ -1,5 +1,13 @@
 <?php
 require '../vendor/autoload.php';
+// use \RedBeanPHP\R as R;
+class_alias('\RedBeanPHP\R','R');
+$db_host = "localhost";
+$db_dbname = "sav_db";
+$db_username = "root";
+$db_password = "virus";
+R::setup ('mysql:host='.$db_host.';dbname='.$db_dbname.';chartset=utf8',''.$db_username.'',''.$db_password.'');
+
 // use \Psr\Http\Message\ServerRequestInterface as Request;
 // use \Psr\Http\Message\ResponseInterface as Response;
 //

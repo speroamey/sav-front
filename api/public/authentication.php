@@ -2,13 +2,9 @@
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \RedBeanPHP\R as R;
+// use \RedBeanPHP\R as R;
 require_once 'passwordHash.php';
-$db_host = "localhost";
-$db_dbname = "sav_db";
-$db_username = "root";
-$db_password = "virus";
-R::setup ('mysql:host='.$db_host.';dbname='.$db_dbname.';chartset=utf8',''.$db_username.'',''.$db_password.'');
+
 // $isConnected = R::testConnection();
 // var_dump($isConnected);
 // for production mode value should be passed to true
@@ -45,13 +41,6 @@ $app->post('/register', function(Request $request, Response $response) {
         $res->message = "désolé cet utilisateur existe déja";
         return $response->withJson($res);
     }
-
-
-
-
-
-
-
 });
 
 $app->post('/login', function(Request $request, Response $response)  {
