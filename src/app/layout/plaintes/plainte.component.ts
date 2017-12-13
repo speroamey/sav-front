@@ -24,8 +24,8 @@ export class PlaintesComponent implements OnInit {
     constructor(private modalService: NgbModal,
                 public activeModal: NgbActiveModal,
                  private plainteModalService:PlainteModalService,
-                 private prestationService:prestationModalService
-               ) {
+                 private prestationService:prestationModalService) {
+
         this.plainte={};
     }
 

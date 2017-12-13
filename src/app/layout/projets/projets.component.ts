@@ -48,11 +48,12 @@ export class ProjetsComponent implements OnInit {
       if(pres !== undefined){
         let tmp= JSON.parse(JSON.stringify(pres))
         let obj=new Date(tmp.date_livraison);
-        console.log(obj);
+        // console.log(obj);
 
         let day = obj.getDate();
         let month = obj.getMonth();
         let year = obj.getFullYear();
+        console.log(pres);
         tmp.date_livraison={
           day:day,
           month:month,
@@ -108,19 +109,6 @@ export class ProjetsComponent implements OnInit {
         //call service
         this.prestationModalService.update(this.prestation.id,this.prestation)
         .subscribe(result => {
-          // console.log(result)
-            // this.prestations.push(result);
-            // let obj=new Date(result[0].date_livraison);
-            // console.log(obj);
-            //
-            // let day = obj.getDate();
-            // let month = obj.getMonth();
-            // let year = obj.getFullYear();
-            // result.date_fin_garantie={
-            //   day:day,
-            //   month:month,
-            //   year:year
-            // }
             let index=this.prestations.findIndex((current)=>{
               return current.id=this.prestation.id;
             })

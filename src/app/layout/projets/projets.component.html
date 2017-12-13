@@ -8,29 +8,32 @@
         </button>
     </div>
     <div class="modal-body">
-            <form role="form">
+            <form role="form" #prestationForm="ngForm" name="prestationForm">
 
               <div class="form-group">
                   <label class="form-control-label" for="libellePrestation">Libellé prestation</label>
-                  <input type="text" class="form-control" [(ngModel)]="prestation.libelle_prestation" name="libellePrestation"  id="libellePrestation">
+                  <input type="text" class="form-control" [(ngModel)]="prestation.libelle_prestation" name="libellePrestation"  id="libellePrestation" required>
               </div>
               <div class="form-group">
                 <label class="form-control-label" for="IdClient">Id du client</label>
-                  <select class="form-control" [(ngModel)]="prestation.client" name="IdPrestation"id="IdPrestation">
+                  <select class="form-control" [(ngModel)]="prestation.client" name="IdPrestation"id="IdPrestation" required>
+                      <option [ngValue]="null" disabled>Choisissez le client</option>
                     <option [ngValue]="client.id" *ngFor="let client of clients">ID:{{client.id}} {{client.nom_client}}</option>
                   </select>
               </div>
 
               <div class="form-group">
                 <label class="form-control-label" for="equipement">Réference de l'équipement</label>
-                  <select multiple class="form-control" [(ngModel)]="prestation.equipement" name="IdPrestation"id="IdPrestation">
+                  <select multiple class="form-control" [(ngModel)]="prestation.equipement" name="IdPrestation"id="IdPrestation" required>
+                      <option [ngValue]="null" disabled>Choisissez le(s) équipements</option>
                     <option [ngValue]="equipement.id" *ngFor="let equipement of equipements | equipementuse:0">{{equipement.reference_equipement}}</option>
                   </select>
               </div>
 
               <div class="form-group">
                 <label class="form-control-label" for="IdTechnicien">Les techniciens</label>
-                  <select multiple class="form-control" [(ngModel)]="prestation.technicien" name="IdTechnicien"id="IdTechnicien">
+                  <select multiple class="form-control" [(ngModel)]="prestation.technicien" name="IdTechnicien"id="IdTechnicien" required>
+                    <option [ngValue]="null" disabled>Choisissez le technicien</option>
                     <option [ngValue]="technicien.id" *ngFor="let technicien of techniciens">{{technicien.id}}: {{technicien.nom_technicien}}</option>
                   </select>
               </div>
@@ -39,19 +42,17 @@
                   <label class="form-control-label" for="dateLivraison">Date De Livraison</label>
                   <div class="input-group">
                       <input type="text" class="form-control " [(ngModel)]="prestation.date_livraison"
-                       name="dateLivraison" ngbDatepicker #d="ngbDatepicker" id="dateLivraison">
+                       name="dateLivraison" ngbDatepicker #d="ngbDatepicker" id="dateLivraison" required>
                       <button class="input-group-addon" (click)="d.toggle()" type="button">
                           <i class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;" aria-hidden="true"></i>
                       </button>
                   </div>
               </div>
-
-
           </form>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-        <button type="button" class="btn btn-primary" (click)="save()">Valider</button>
+        <button type="button" class="btn btn-primary" (click)="save()" [disabled]="prestationForm.form.invalid">Valider</button>
     </div>
 </ng-template>
 
@@ -88,6 +89,7 @@
                             <th>ID</th>
                             <th>Libellé</th>
                             <th>Date Livraison</th>
+                            <th>ID Client</th>
                             <!-- <th>Durée de Garantie</th>
                             <th>Date de fin de garantie</th> -->
 
@@ -100,6 +102,8 @@
                             <td  [routerLink]="['/projets', prestation.id]" style="cursor:pointer;">{{prestation.id}}</td>
                             <td  [routerLink]="['/projets', prestation.id]" style="cursor:pointer;">{{prestation.libelle_prestation}}</td>
                             <td  [routerLink]="['/projets', prestation.id]" style="cursor:pointer;">{{prestation.date_livraison | date:yMdjm}}</td>
+                            <td  [routerLink]="['/projets', prestation.id]" style="cursor:pointer;">{{prestation.client}}</td>
+
                             <!-- <td  [routerLink]="['/projets', prestation.id]" style="cursor:pointer;">{{prestation.delais_garantie}} mois</td>
                             <td  [routerLink]="['/projets', prestation.id]" style="cursor:pointer;">{{prestation.date_fin_garantie | date:yMdjm}}</td> -->
 

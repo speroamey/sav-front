@@ -40,11 +40,11 @@ $app->post('/prestation', function(Request $request, Response $response) {
      $id = R::store($prestation);
      if ($id) {
          # code...
+
          foreach ($equipement_of_pres as $value) {
            $prestationequipement = R::dispense('prestationequipement');
-        // $equipement = R::dispense('equipement');
 
-           $equipement = R::findOne('equipement','reference_equipement =?',array($value));
+           $equipement = R::findOne('equipement','reference_equipement =?',[$value]);
            $prestations = R::load('prestation', $id);
            $date= date_create($prestations['date_livraison']);
            $duration=$equipement['delais_garantie'];
@@ -83,10 +83,10 @@ $app->post('/prestation', function(Request $request, Response $response) {
           mail($to,$subject,$txt,$headers);
          }
 
-         $data['id']=$id;
-         $data['status']="success";
-         $data['message']="Félicitation, la prestation a été créé";
-         return $response->withJson($data);
+        //  $data['id']=$id;
+        //  $data['status']="success";
+        //  $data['message']="Félicitation, la prestation a été créé";
+         return $response->withJson($prestation,200);
      }else{
          $response->status = "error";
          $response->message = "erreur d'enregistrement";
