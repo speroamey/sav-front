@@ -122,9 +122,10 @@ export class ProjetsComponent implements OnInit {
       // this.prestation.equipement=tmp1.join(',');
       let tmp2=this.prestation.technicien;
       this.prestation.technicien=tmp2.join(',');
-      console.log(this.prestation);
+
       this.prestationModalService.add(this.prestation)
       .subscribe(result => {
+        console.log(result);
           this.prestations.push(result);
           this.prestation={};
       });

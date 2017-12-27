@@ -25,7 +25,7 @@
               <div class="form-group">
                 <label class="form-control-label" for="equipement">Réference de l'équipement</label>
                   <select multiple class="form-control" [(ngModel)]="prestation.equipement" name="IdPrestation"id="IdPrestation" required>
-                      <option [ngValue]="null" disabled>Choisissez le(s) équipements</option>
+                      <!-- <option [ngValue]="null" disabled>Choisissez le(s) équipements</option> -->
                     <option [ngValue]="equipement.id" *ngFor="let equipement of equipements | equipementuse:0">{{equipement.reference_equipement}}</option>
                   </select>
               </div>

@@ -33,6 +33,7 @@ $app->post('/prestation', function(Request $request, Response $response) {
 
     //  $prestation->technicien = $data['technicien'];
      $equipement_of_pres=$data['equipement'];
+
      $prestation->client=$data['client'];
      //
     //  $equipement = R::dispense( 'equipement' );
@@ -44,7 +45,7 @@ $app->post('/prestation', function(Request $request, Response $response) {
          foreach ($equipement_of_pres as $value) {
            $prestationequipement = R::dispense('prestationequipement');
 
-           $equipement = R::findOne('equipement','reference_equipement =?',[$value]);
+           $equipement = R::findOne('equipement','id =?',[$value]);
            $prestations = R::load('prestation', $id);
            $date= date_create($prestations['date_livraison']);
            $duration=$equipement['delais_garantie'];
@@ -55,37 +56,37 @@ $app->post('/prestation', function(Request $request, Response $response) {
            $idPrestEquip=R::store($prestationequipement);
 
            if($idPrestEquip){
-            $equipement = R::findOne('equipement','reference_equipement =?',array($value));
-            // echo $equipement;
+            $equipement = R::findOne('equipement','id =?',array($value));
+
             if($equipement){
                 $equipement['was_use']=1;
                 R::store($equipement);
             }
           }
-          // $dt=$date->format("d-m-Y");
-          // $sid = 'ACe80cc2550d7c3ba4c67d7cb71a73579f';
-          // $token = '6041b12555275968db0223b35880e871';
-          // $client = new Client($sid,$token);
-          // $client->messages->create('+22961725134',
-          //     array('from' => '+13016405860',
-          //            'body' => "
-          //                       Quality corporate vous Informe que la periode de guarantie de l'équipement $value de la prestation Numero $id arrive a sa fin le $dt"
-          //                    )
-          //           );
+        //   $dt=$date->format("d-m-Y");
+        //   $sid = 'ACe80cc2550d7c3ba4c67d7cb71a73579f';
+        //   $token = '6041b12555275968db0223b35880e871';
+        //   $client = new Client($sid,$token);
+        //   $client->messages->create('+22961725134',
+        //       array('from' => '+13016405860',
+        //              'body' => "
+        //                         Quality corporate vous Informe que la periode de guarantie de l'équipement $value de la prestation Numero $id arrive a sa fin le $dt"
+        //                      )
+        //             );
           //
-          // $to = "ameyspero@gmail.com";
-          // $subject = "Délais de garantie";
-          // $txt = "Bonjour Mr/Mme!
-          // Quality Co vous Informe que la periode de guarantie de l'équipement $value de la prestation Numero $id arrive a sa fin le $dt";
-          // $headers = "From: quality-corporate@gmail.com" . "\r\n" .
-          // "CC: ameyspero@gmail.com";
+        //   $to = "ameyspero@gmail.com";
+        //   $subject = "Délais de garantie";
+        //   $txt = "Bonjour Mr/Mme!
+        //   Quality Co vous Informe que la periode de guarantie de l'équipement $value de la prestation Numero $id arrive a sa fin le $dt";
+        //   $headers = "From: quality-corporate@gmail.com" . "\r\n" .
+        //   "CC: ameyspero@gmail.com";
           //
-          // mail($to,$subject,$txt,$headers);
+        //   mail($to,$subject,$txt,$headers);
          }
 
-        //  $data['id']=$id;
-        //  $data['status']="success";
-        //  $data['message']="Félicitation, la prestation a été créé";
+         $data['id']=$id;
+         $data['status']="success";
+         $data['message']="Félicitation, la prestation a été créé";
          return $response->withJson($prestation,200);
      }else{
          $response->status = "error";
