@@ -62,25 +62,25 @@ $app->post('/prestation', function(Request $request, Response $response) {
                 R::store($equipement);
             }
           }
-          $dt=$date->format("d-m-Y");
-          $sid = 'ACe80cc2550d7c3ba4c67d7cb71a73579f';
-          $token = '6041b12555275968db0223b35880e871';
-          $client = new Client($sid,$token);
-          $client->messages->create('+22961725134',
-              array('from' => '+13016405860',
-                     'body' => "
-                                Quality corporate vous Informe que la periode de guarantie de l'équipement $value de la prestation Numero $id arrive a sa fin le $dt"
-                             )
-                    );
-
-          $to = "ameyspero@gmail.com";
-          $subject = "Délais de garantie";
-          $txt = "Bonjour Mr/Mme!
-          Quality Co vous Informe que la periode de guarantie de l'équipement $value de la prestation Numero $id arrive a sa fin le $dt";
-          $headers = "From: quality-corporate@gmail.com" . "\r\n" .
-          "CC: ameyspero@gmail.com";
-
-          mail($to,$subject,$txt,$headers);
+          // $dt=$date->format("d-m-Y");
+          // $sid = 'ACe80cc2550d7c3ba4c67d7cb71a73579f';
+          // $token = '6041b12555275968db0223b35880e871';
+          // $client = new Client($sid,$token);
+          // $client->messages->create('+22961725134',
+          //     array('from' => '+13016405860',
+          //            'body' => "
+          //                       Quality corporate vous Informe que la periode de guarantie de l'équipement $value de la prestation Numero $id arrive a sa fin le $dt"
+          //                    )
+          //           );
+          //
+          // $to = "ameyspero@gmail.com";
+          // $subject = "Délais de garantie";
+          // $txt = "Bonjour Mr/Mme!
+          // Quality Co vous Informe que la periode de guarantie de l'équipement $value de la prestation Numero $id arrive a sa fin le $dt";
+          // $headers = "From: quality-corporate@gmail.com" . "\r\n" .
+          // "CC: ameyspero@gmail.com";
+          //
+          // mail($to,$subject,$txt,$headers);
          }
 
         //  $data['id']=$id;
