@@ -20,7 +20,7 @@ $app->post('/plainte', function(Request $request, Response $response) {
          # code...
          $data[id]=$id;
          $data[status]="success";
-         $data[message]="Félicitation, l'plainte à été créé";
+         $data[message]="Félicitation, la plainte à été créé";
          return $response->withJson($data);
      }else{
          $response->status = "error";
