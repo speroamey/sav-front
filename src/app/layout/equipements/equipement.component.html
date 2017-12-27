@@ -3,30 +3,30 @@
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title">Equipement</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
         <!-- <p>One fine body&hellip;</p> -->
-            <form role="form">
+            <form role="form" #equipementForm="ngForm" name="equipementForm">
               <div class="form-group">
                   <label class="form-control-label" for="ReferenceEquipement">Référence de l'équipement</label>
-                  <input type="text" class="form-control" [(ngModel)]="equipement.reference_equipement" name="ReferenceEquipement"  id="ReferenceEquipement">
+                  <input type="text" class="form-control" [(ngModel)]="equipement.reference_equipement" name="ReferenceEquipement"  id="ReferenceEquipement" required>
               </div>
 
               <div class="form-group">
                   <label class="form-control-label" for="nomEquipement">nom de l'équipement</label>
-                  <input type="text" class="form-control" [(ngModel)]="equipement.nom_equipement" name="nomEquipement"  id="nomEquipement">
+                  <input type="text" class="form-control" [(ngModel)]="equipement.nom_equipement" name="nomEquipement"  id="nomEquipement" required>
               </div>
               <div class="form-group">
                   <label class="form-control-label" for="MarqueEquipement">Marque de l'equipement</label>
-                  <input type="text" class="form-control" [(ngModel)]="equipement.marque_equipement" name="MarqueEquipement"  id="MarqueEquipement">
+                  <input type="text" class="form-control" [(ngModel)]="equipement.marque_equipement" name="MarqueEquipement"  id="MarqueEquipement" required>
               </div>
 
               <div class="form-group">
                   <label class="form-control-label" for="DelaisGarantieEquipement">delais de garantie de equipement</label>
-                  <input type="number" class="form-control" [(ngModel)]="equipement.delais_garantie" name="DelaisGarantieEquipement"id="DelaisGarantieEquipement">
+                  <input type="number" class="form-control" [(ngModel)]="equipement.delais_garantie" name="DelaisGarantieEquipement"id="DelaisGarantieEquipement" required>
               </div>
 
 
@@ -34,7 +34,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-        <button type="button" class="btn btn-primary" (click)="save()">Valider</button>
+        <button type="button" class="btn btn-primary" (click)="save()" [disabled]="equipementForm.form.invalid">Valider</button>
     </div>
 </ng-template>
 
@@ -60,7 +60,7 @@
 <div [@routerTransition]>
     <!-- <app-page-header [heading]="'Projets'" [icon]="'fa-table'"></app-page-header> -->
     <div class="row">
-        <div class="col col-xl-6 col-lg-12 col-md-12">
+        <div class="ccol-lg-12 col-md-12">
         <button class="btn btn-primary" (click)="open(content)"> + Ajouter</button>
             <div class="card mb-12 col-md-12">
                 <div class="card-header">Liste des equipements</div>

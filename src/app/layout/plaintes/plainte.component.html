@@ -3,29 +3,29 @@
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title">Plaintes</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-            <form role="form">
+            <form role="form" #plainteForm="ngForm" name="plainteForm">
                 <div class="form-group">
                     <label class="form-control-label" for="IdPrestation">Id de la Prestation</label>
-                    <select class="form-control" [(ngModel)]="plainte.prestation" name="IdPrestation"id="IdPrestation">
+                    <select class="form-control" [(ngModel)]="plainte.prestation" name="IdPrestation"id="IdPrestation" required>
                         <option [ngValue]="prestation.id" *ngFor="let prestation of prestations">{{prestation.id}} {{prestation.libelle_prestation}}</option>
                     </select>
                 </div>
 
               <div class="form-group">
                   <label class="form-control-label" for="DescriptionPlainte">Description de plainte</label>
-                  <input type="text" class="form-control" [(ngModel)]="plainte.description_plainte" name="description_plainte"  id="description_plainte">
+                  <input type="text" class="form-control" [(ngModel)]="plainte.description_plainte" name="description_plainte"  id="description_plainte" required>
               </div>
 
               <div class="form-group">
                   <label class="form-control-label" for="datePlainte">Date de la plainte</label>
                   <div class="input-group">
                       <input type="text" class="form-control " [(ngModel)]="plainte.date_plainte"
-                       name="dateLivraison" ngbDatepicker #d="ngbDatepicker" id="datePlainte">
+                       name="dateLivraison" ngbDatepicker #d="ngbDatepicker" id="datePlainte" required>
                       <button class="input-group-addon" (click)="d.toggle()" type="button">
                           <i class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;" aria-hidden="true"></i>
                       </button>
@@ -41,7 +41,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-        <button type="button" class="btn btn-primary" (click)="save()">Valider</button>
+        <button type="button" class="btn btn-primary" (click)="save()" [disabled]="plainteForm.form.invalid">Valider</button>
     </div>
 </ng-template>
 
@@ -55,7 +55,7 @@
         </button>
     </div>
     <div class="modal-body">
-        <div class="ustify-content-center">Voulez vous vraimen supprimer cette plainte ?</div>
+        <div class="ustify-content-center">Voulez vous vraiment supprimer cette plainte ?</div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="c('Close click')">Non</button>
@@ -68,7 +68,7 @@
 <div [@routerTransition]>
     <!-- <app-page-header [heading]="'Projets'" [icon]="'fa-table'"></app-page-header> -->
     <div class="row">
-        <div class="col col-xl-6 col-lg-12 col-md-12">
+        <div class="col-md-12">
         <button class="btn btn-primary" (click)="open(content)"> + Ajouter</button>
             <div class="card mb-12 col-md-12">
                 <div class="card-header">Liste des Plaintes</div>
