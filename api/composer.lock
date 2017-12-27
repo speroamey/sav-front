@@ -4,7 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "404bef0069fea290643e83e9bc7693e0",
     "content-hash": "31b676dc0286cdb92ed905f3f498156a",
     "packages": [
         {
@@ -36,7 +35,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
-            "time": "2017-02-14 19:40:03"
+            "time": "2017-02-14T19:40:03+00:00"
         },
         {
             "name": "firebase/php-jwt",
@@ -82,7 +81,7 @@
             ],
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
-            "time": "2017-06-27 22:17:23"
+            "time": "2017-06-27T22:17:23+00:00"
         },
         {
             "name": "gabordemooij/redbean",
@@ -90,12 +89,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gabordemooij/redbean.git",
-                "reference": "917d9ff6bd900c6f90481f8861245168f600bcf1"
+                "reference": "c3cceb5811a6a27593b163682a124ec25bcb430d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/917d9ff6bd900c6f90481f8861245168f600bcf1",
-                "reference": "917d9ff6bd900c6f90481f8861245168f600bcf1",
+                "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/c3cceb5811a6a27593b163682a124ec25bcb430d",
+                "reference": "c3cceb5811a6a27593b163682a124ec25bcb430d",
                 "shasum": ""
             },
             "require": {
@@ -123,7 +122,7 @@
             "keywords": [
                 "orm"
             ],
-            "time": "2017-10-03 21:44:55"
+            "time": "2017-11-25T17:33:47+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -166,7 +165,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2017-01-19 11:35:12"
+            "time": "2017-01-19T11:35:12+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -216,7 +215,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2017-07-23 07:32:15"
+            "time": "2017-07-23T07:32:15+00:00"
         },
         {
             "name": "psr/container",
@@ -265,7 +264,7 @@
                 "container-interop",
                 "psr"
             ],
-            "time": "2017-02-14 16:28:37"
+            "time": "2017-02-14T16:28:37+00:00"
         },
         {
             "name": "psr/http-message",
@@ -315,7 +314,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -362,20 +361,20 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "slim/slim",
-            "version": "3.8.1",
+            "version": "3.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slimphp/Slim.git",
-                "reference": "5385302707530b2bccee1769613ad769859b826d"
+                "reference": "4086d0106cf5a7135c69fce4161fe355a8feb118"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim/zipball/5385302707530b2bccee1769613ad769859b826d",
-                "reference": "5385302707530b2bccee1769613ad769859b826d",
+                "url": "https://api.github.com/repos/slimphp/Slim/zipball/4086d0106cf5a7135c69fce4161fe355a8feb118",
+                "reference": "4086d0106cf5a7135c69fce4161fe355a8feb118",
                 "shasum": ""
             },
             "require": {
@@ -433,7 +432,7 @@
                 "micro",
                 "router"
             ],
-            "time": "2017-03-19 17:55:20"
+            "time": "2017-11-26T19:13:09+00:00"
         },
         {
             "name": "tuupola/slim-jwt-auth",
@@ -487,7 +486,7 @@
                 "middleware",
                 "psr-7"
             ],
-            "time": "2017-07-12 09:57:35"
+            "time": "2017-07-12T09:57:35+00:00"
         },
         {
             "name": "twilio/sdk",
@@ -533,7 +532,7 @@
                 "sms",
                 "twilio"
             ],
-            "time": "2017-12-02 00:05:34"
+            "time": "2017-12-02T00:05:34+00:00"
         }
     ],
     "packages-dev": [],

@@ -27,10 +27,12 @@ $app->post('/register', function(Request $request, Response $response) {
         $id = R::store($user);
 
         if ($id != NULL) {
+            $res=NULL;
             $res->status = "success";
             $res->message = "Félicitation, Votre compte est créé";
             return $response->withJson($res);
         } else {
+
             $res->status  = "error";
             $res->message  = "Désolé. veuillez réessayer";
             // echo "désolé. veuillez réessayer";
