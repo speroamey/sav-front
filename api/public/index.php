@@ -8,11 +8,7 @@ $db_username = "root";
 $db_password = "";
 R::setup ('mysql:host='.$db_host.';dbname='.$db_dbname.';chartset=utf8',''.$db_username.'',''.$db_password.'');
 
-// use \Psr\Http\Message\ServerRequestInterface as Request;
-// use \Psr\Http\Message\ResponseInterface as Response;
-//
-// require '../vendor/autoload.php';
-// use Twilio\Rest\Client;
+
 $app = new Slim\App([
     "settings"  => [
         "determineRouteBeforeAppMiddleware" => true,
